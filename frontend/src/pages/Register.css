@@ -1,10 +1,11 @@
+/* GLOBAL RESET */
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
 }
 
-/* 🔥 DARK GRADIENT BACKGROUND */
-.login-container {
+/* 🔥 BACKGROUND */
+.register-container {
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -13,76 +14,98 @@ body {
 }
 
 /* 🔥 GLASS CARD */
-.login-box {
+.register-box {
     backdrop-filter: blur(15px);
     background: rgba(255, 255, 255, 0.08);
     padding: 40px;
     border-radius: 15px;
-    width: 320px;
+    width: 340px;
     text-align: center;
     border: 1px solid rgba(255,255,255,0.2);
     box-shadow: 0 8px 32px rgba(0,0,0,0.3);
     color: white;
 }
 
-.login-box h2 {
+/* TITLE */
+.register-box h2 {
     margin-bottom: 25px;
+    font-weight: 600;
 }
 
-/* 🔥 INPUT STYLE */
-.login-box input {
+/* 🔥 INPUTS */
+.register-box input {
     width: 100%;
     padding: 12px;
-    margin: 10px 0;
+    margin-bottom: 12px;
     border-radius: 10px;
     border: none;
     outline: none;
     background: rgba(255,255,255,0.1);
     color: white;
+    font-size: 14px;
 }
 
-.login-box input::placeholder {
+/* Placeholder */
+.register-box input::placeholder {
     color: #ccc;
 }
 
+/* Focus effect */
+.register-box input:focus {
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* 🔥 HELPER TEXT */
+.helper-text {
+    font-size: 12px;
+    color: #aaa;
+    margin-top: -5px;
+    margin-bottom: 12px;
+}
+
 /* 🔥 BUTTON */
-.login-box button {
+.register-box button {
     display: block;
     width: 80%;
-    padding: 14px;              /* ⬅️ Increase height */
     margin: 15px auto 0;
-    margin-top: 15px;
+    padding: 14px;
     border-radius: 12px;
     border: none;
     background: linear-gradient(to right, #667eea, #764ba2);
     color: white;
     font-weight: 600;
-    font-size: 16px;            /* ⬅️ Bigger text */
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.login-box button:hover {
-    transform: translateY(-2px);   /* subtle lift */
+/* Hover */
+.register-box button:hover {
+    transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
 }
 
-.login-box button:active {
+/* Click */
+.register-box button:active {
     transform: scale(0.97);
 }
 
-.login-box button {
-    box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+/* Disabled */
+.register-box button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 /* 🔥 LINKS */
 .link {
-    margin-top: 12px;
+    margin-top: 15px;
     cursor: pointer;
     font-size: 14px;
     color: #bbb;
+    transition: 0.3s;
 }
 
+/* Hover link */
 .link:hover {
     color: white;
 }

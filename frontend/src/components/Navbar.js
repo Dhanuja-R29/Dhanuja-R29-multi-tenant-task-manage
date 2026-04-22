@@ -1,23 +1,18 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import "./Bar.css";
 
 function Navbar() {
-    const { logout } = useContext(AuthContext);
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        logout();
-        navigate("/");
-    };
+    const { logout, user } = useContext(AuthContext);
 
     return (
-        <div style={{ padding: "10px", background: "#eee" }}>
-            <span>Task Manager</span>
+        <div className="navbar">
+            <h3>Task Manager 🚀</h3>
 
-            <button style={{ float: "right" }} onClick={handleLogout}>
-                Logout
-            </button>
+            <div>
+                <span>{user?.name || "User"}</span>
+                <button onClick={logout}>Logout</button>
+            </div>
         </div>
     );
 }

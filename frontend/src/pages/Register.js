@@ -1,7 +1,8 @@
 import { useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"; // reuse same style
+import "./Register.css";
+import { toast } from "react-toastify";
 
 function Register() {
     const [form, setForm] = useState({
@@ -11,6 +12,7 @@ function Register() {
         organization: ""
     });
 
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -21,36 +23,70 @@ function Register() {
         const { name, email, password, organization } = form;
 
         if (!name || !email || !password || !organization) {
-            alert("Please fill all fields");
+            toast.error("Please fill all fields ❌");
             return;
         }
 
         try {
-            await API.post("/auth/register", form);
-            alert("Registered Successfully ✅");
+            setLoading(true);
 
-            navigate("/"); // go to login
+            await API.post("/auth/register", form);
+
+            toast.success("Registered Successfully 🎉");
+
+            setTimeout(() => {
+                navigate("/");
+            }, 1200);
+
         } catch (err) {
-            alert(err.response?.data?.msg || "Registration failed ❌");
+            toast.error(err.response?.data?.msg || "Registration failed ❌");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div className="login-container">
-            <div className="login-box">
-                <h2>Register</h2>
+        <div className="register-container">
+            <div className="bg-circle circle1"></div>
+            <div className="bg-circle circle2"></div>
+            <div className="bg-circle circle3"></div>
+            <div className="register-box">
+                <h2>Create Account 🚀</h2>
 
-                <input name="name" placeholder="Name" onChange={handleChange} />
-                <input name="email" placeholder="Email" onChange={handleChange} />
-                <input name="password" type="password" placeholder="Password" onChange={handleChange} />
-                <input name="organization" placeholder="Organization ID" onChange={handleChange} />
-                <p style={{ fontSize: "12px" }}>
-                    Enter Organization ID (get from admin)
+                <input 
+                    name="name" 
+                    placeholder="Full Name" 
+                    onChange={handleChange} 
+                />
+
+                <input 
+                    name="email" 
+                    placeholder="Email" 
+                    onChange={handleChange} 
+                />
+
+                <input 
+                    name="password" 
+                    type="password" 
+                    placeholder="Password" 
+                    onChange={handleChange} 
+                />
+
+                <input 
+                    name="organization" 
+                    placeholder="Organization ID" 
+                    onChange={handleChange} 
+                />
+
+                <p className="helper-text">
+                    Enter Organization ID provided by admin
                 </p>
-                
-                <button onClick={handleRegister}>Register</button>
 
-                <p onClick={() => navigate("/")} style={{ cursor: "pointer", marginTop: "10px" }}>
+                <button onClick={handleRegister} disabled={loading}>
+                    {loading ? "Creating..." : "Register"}
+                </button>
+
+                <p onClick={() => navigate("/")} className="link">
                     Already have an account? Login
                 </p>
             </div>

@@ -1,6 +1,9 @@
 import { useState, useContext } from "react";
 import API from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import "./TaskList.css";
+import "./TaskForm.css";
+import {toast} from "react-toastify";
 
 function TaskList({ tasks, fetchTasks }) {
     const [editId, setEditId] = useState(null);
@@ -15,10 +18,10 @@ function TaskList({ tasks, fetchTasks }) {
     const handleDelete = async (id) => {
         try {
             await API.delete(`/tasks/${id}`);
-            alert("Task Deleted ✅");
+            toast.success("Task Deleted ✅");
             fetchTasks();
         } catch (err) {
-            alert(err.response?.data?.msg || "Delete not allowed ❌");
+            toast.delete("Delete not allowed ❌");
         }
     };
 
@@ -34,32 +37,26 @@ function TaskList({ tasks, fetchTasks }) {
     const handleUpdate = async (id) => {
         try {
             await API.put(`/tasks/${id}`, editData);
-            alert("Task Updated ✅");
+            toast.success("Task Updated ✅");
             setEditId(null);
             fetchTasks();
         } catch (err) {
-            alert(err.response?.data?.msg || "Update failed ❌");
+            toast.error("Update failed ❌");
         }
     };
 
     return (
-        <div>
-            <h3>Your Tasks</h3>
+    <div>
+        <h3>Your Tasks</h3>
 
+        <div className="task-container">
             {tasks.map((task) => {
                 const isOwner = task.createdBy === user?.id;
                 const isAdmin = user?.role === "admin";
 
                 return (
-                    <div
-                        key={task._id}
-                        style={{
-                            border: "1px solid #ccc",
-                            margin: "10px",
-                            padding: "10px",
-                            borderRadius: "8px"
-                        }}
-                    >
+                    <div className="task-card" key={task._id}>
+
                         {editId === task._id ? (
                             <>
                                 <input
@@ -87,25 +84,33 @@ function TaskList({ tasks, fetchTasks }) {
                                     <option value="completed">Completed</option>
                                 </select>
 
-                                <button onClick={() => handleUpdate(task._id)}>
-                                    Save
-                                </button>
+                                <div className="task-actions">
+                                    <button onClick={() => handleUpdate(task._id)}>
+                                        Save
+                                    </button>
 
-                                <button onClick={() => setEditId(null)}>
-                                    Cancel
-                                </button>
+                                    <button onClick={() => setEditId(null)}>
+                                        Cancel
+                                    </button>
+                                </div>
                             </>
                         ) : (
                             <>
-                                <h4>{task.title}</h4>
-                                <p>{task.description}</p>
-                                <p>
-                                    Status: <b>{task.status}</b>
-                                </p>
+                                {/* 🔥 HEADER */}
+                                <div className="task-header">
+                                    <h4>{task.title}</h4>
 
-                                {/* 🔐 RBAC LOGIC */}
+                                    <span className={`status ${task.status}`}>
+                                        {task.status}
+                                    </span>
+                                </div>
+
+                                {/* 🔥 DESCRIPTION */}
+                                <p>{task.description}</p>
+
+                                {/* 🔥 ACTIONS (RBAC) */}
                                 {(isAdmin || isOwner) && (
-                                    <>
+                                    <div className="task-actions">
                                         <button onClick={() => startEdit(task)}>
                                             Edit
                                         </button>
@@ -113,7 +118,7 @@ function TaskList({ tasks, fetchTasks }) {
                                         <button onClick={() => handleDelete(task._id)}>
                                             Delete
                                         </button>
-                                    </>
+                                    </div>
                                 )}
                             </>
                         )}
@@ -121,6 +126,7 @@ function TaskList({ tasks, fetchTasks }) {
                 );
             })}
         </div>
+    </div>
     );
 }
 

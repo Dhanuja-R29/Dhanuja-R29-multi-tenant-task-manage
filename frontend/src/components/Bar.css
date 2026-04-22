@@ -1,0 +1,28 @@
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #1e293b;
+    padding: 20px;
+}
+
+.sidebar p {
+    cursor: pointer;
+    margin: 12px 0;
+}
+
+.sidebar p:hover {
+    color: #60a5fa;
+}
+
+.sidebar .active {
+    color: #60a5fa;
+    font-weight: bold;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #1e293b;
+}

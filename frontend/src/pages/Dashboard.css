@@ -1,0 +1,90 @@
+.dashboard {
+    display: flex;
+    height: 100vh;
+    background: #0f172a;
+    color: white;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    background: #1e293b;
+    padding: 20px;
+}
+
+/* MAIN AREA */
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    background: #1e293b;
+}
+
+/* CONTENT */
+.content {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+/* DASHBOARD OVERVIEW */
+.dashboard-overview h1 {
+    margin-bottom: 20px;
+}
+
+/* GRID */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+/* CARD */
+.stat-card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+.stat-card:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* NUMBER */
+.stat-card h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* LABEL */
+.stat-card p {
+    color: #cbd5e1;
+}
+
+/* COLORS */
+.stat-card.total {
+    border-left: 5px solid #6366f1;
+}
+
+.stat-card.completed {
+    border-left: 5px solid #22c55e;
+}
+
+.stat-card.pending {
+    border-left: 5px solid #facc15;
+    color: red;
+}
+
+.stat-card.progress {
+    border-left: 5px solid #3b82f6;
+}

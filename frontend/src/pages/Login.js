@@ -3,80 +3,80 @@ import API from "../services/api";
 import "./Login.css";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (!email || !password) {
-      alert("Please fill all fields");
+      toast.error("Please fill all fields ❌");
       return;
     }
 
     try {
+      setLoading(true);
+
       const res = await API.post("/auth/login", {
         email,
         password,
       });
 
       login(res.data.token);
-      navigate("/dashboard");
 
-      alert("Login Successful ✅");
+      toast.success("Login Successful 🚀");
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1000);
 
     } catch (err) {
-      console.log("ERROR:", err.response);
-      alert(err.response?.data?.msg || "Login Failed ❌");
+      toast.error(err.response?.data?.msg || "Login Failed ❌");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-container">
+      <div className="bg-circle circle1"></div>
+      <div className="bg-circle circle2"></div>
+      <div className="bg-circle circle3"></div>
+
       <div className="login-box">
-        <h2>Login</h2>
+        <h2>Welcome Back 👋</h2>
 
         <input
           type="email"
-          placeholder="Enter Email"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
         <input
           type="password"
-          placeholder="Enter Password"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleLogin} disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
+        </button>
 
-        {/* 🔥 REGISTER LINK */}
-        <p
-          onClick={() => navigate("/register")}
-          style={{
-            marginTop: "15px",
-            cursor: "pointer",
-            color: "#667eea",
-            fontSize: "14px"
-          }}
-        >
-          New user? Register here
+        <p onClick={() => navigate("/register")} className="link">
+          Don’t have an account? Register
         </p>
-        <p onClick={() => navigate("/create-org")}
-        style={{
-          marginTop: "10px",
-          cursor: "pointer",
-          color: "#667eea",
-          fontSize: "14px"
-          }}
-          >
-            Create Organization
-          </p>
+
+        <p onClick={() => navigate("/create-org")} className="link">
+          Create Organization
+        </p>
+
       </div>
     </div>
   );
