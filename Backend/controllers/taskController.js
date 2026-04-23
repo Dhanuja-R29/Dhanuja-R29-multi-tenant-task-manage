@@ -51,7 +51,7 @@ exports.updateTask = async (req, res) => {
 
     // Tenant check
     if (task.organization.toString() !== req.user.organization) {
-      return res.status(403).json({ msg: "Forbidden" });
+      return res.status(403).json({ msg: "Access Denied" });
     }
 
     // RBAC check
