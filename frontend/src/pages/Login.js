@@ -26,6 +26,7 @@ function Login() {
         email,
         password,
       });
+      console.log(res.data);
 
       login(res.data.token);
 
@@ -34,7 +35,6 @@ function Login() {
       setTimeout(() => {
         navigate("/dashboard");
       }, 1000);
-
     } catch (err) {
       toast.error(err.response?.data?.msg || "Login Failed ❌");
     } finally {
@@ -69,6 +69,14 @@ function Login() {
           {loading ? "Logging in..." : "Login"}
         </button>
 
+        <button
+          onClick={() =>
+            (window.location.href = "http://localhost:5000/api/auth/google")
+          }
+        >
+          Continue with Google 🚀
+        </button>
+        
         <p onClick={() => navigate("/register")} className="link">
           Don’t have an account? Register
         </p>
@@ -76,7 +84,6 @@ function Login() {
         <p onClick={() => navigate("/create-org")} className="link">
           Create Organization
         </p>
-
       </div>
     </div>
   );

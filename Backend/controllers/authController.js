@@ -77,3 +77,30 @@ exports.login = async (req, res) => {
         return res.status(401).json({ msg: "Invalid token" });
     }
 };
+
+exports.oauthRegister = async (req, res) => {
+  try {
+    const { name, email, organization } = req.body;
+
+    const user = await User.create({
+      name,
+      email,
+      password: "oauth",
+      role: "member",
+      organization,
+    });
+
+    const token = jwt.sign(
+      {
+        id: user._id,
+        role: user.role,
+        organization: user.organization,
+      },
+      process.env.JWT_SECRET,
+    );
+
+    res.json({ token });
+  } catch (err) {
+    res.status(400).json({ msg: "Error creating user" });
+  }
+};

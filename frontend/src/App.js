@@ -8,6 +8,8 @@ import DashboardOverview from "./pages/DashboardOverview";
 import TaskPage from "./pages/TaskPage";
 import ProfilePage from "./pages/ProfilePage";
 import AuditPage from "./pages/AuditPage";
+import SelectOrg from "./pages/SelectOrg";
+import OAuthSuccess from "./pages/OAuthSuccess";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,6 +21,8 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/create-org" element={<CreateOrg />} />
+        <Route path="/select-org" element={<SelectOrg />} />
+        <Route path="/oauth-success" element={<OAuthSuccess />} />
 
         <Route
           path="/dashboard"

@@ -9,6 +9,14 @@ exports.createOrg = async (req, res) => {
         if (!name || !email || !password || !userName) {
             return res.status(400).json({ msg: "All fields required" });
         }
+        const existingOrg = await Organization.findOne({ name });
+        if (existingOrg) {
+            return res.status(400).json({ msg: "Organization name already taken" });
+        }
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ msg: "User already exists with this email" });
+        }
 
         const org = await Organization.create({ name });
 
@@ -24,11 +32,6 @@ exports.createOrg = async (req, res) => {
 
         await admin.save();
         
-        const existingUser = await User.findOne({ email });
-        
-        if (existingUser) {
-            return res.status(400).json({ msg: "User already exists with this email" });
-        }
         res.status(201).json({
             msg: "Organization + Admin created",
             orgId: org._id

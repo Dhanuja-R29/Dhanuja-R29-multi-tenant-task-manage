@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const app = express();
 const cors = require("cors");
+const passport = require("./config/passport");
 const authRoutes = require("./routes/authRoutes");
 const orgRoutes = require("./routes/orgRoutes");
 const taskRoutes = require("./routes/taskRoutes");
@@ -12,6 +13,7 @@ const auditRoutes = require("./routes/auditRoutes");
 
 app.use(express.json());
 app.use(cors());
+app.use(passport.initialize());
 app.use("/api/auth", authRoutes);
 app.use("/api/org", orgRoutes);
 app.use("/api/tasks", taskRoutes);
